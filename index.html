@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEW DROP | Limited Release</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #ff3b3b;
+            --deep-red: #d60000;
+            --whatsapp-green: #25d366;
+            --bg-light: #ffffff;
+            --text-dark: #1a1a1a;
+            --shadow: 0 10px 30px rgba(255, 59, 59, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, .btn-action {
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- Header --- */
+        .hero {
+            height: 40vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #ff3b3b 0%, #8b0000 100%);
+            color: white;
+            padding: 20px;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 10vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+
+        /* --- Main Content --- */
+        .container {
+            max-width: 1200px;
+            margin: -30px auto 100px;
+            padding: 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border: 2px solid #f0f0f0;
+            border-radius: 20px;
+            padding: 20px;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+            border-color: var(--primary-red);
+        }
+
+        .product-img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #f9f9f9;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+
+        .yt-link {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: var(--primary-red);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+            background: rgba(255, 59, 59, 0.08);
+            padding: 8px 16px;
+            border-radius: 50px;
+            transition: 0.2s;
+        }
+
+        .badge {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            z-index: 5;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .status-available { background: #00c853; color: white; }
+        .status-pending { background: #ffab00; color: white; }
+
+        .price-box {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary-red);
+            margin-bottom: 20px;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            opacity: 0.3;
+            font-size: 1rem;
+            margin-right: 10px;
+            color: var(--text-dark);
+        }
+
+        .btn-action {
+            width: 100%;
+            padding: 18px;
+            background: var(--primary-red);
+            border: none;
+            color: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 59, 59, 0.4);
+        }
+
+        .btn-action:hover {
+            background: var(--deep-red);
+            transform: translateY(-2px);
+        }
+
+        /* --- Floating WhatsApp Button --- */
+        .float-wa {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: var(--whatsapp-green);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            z-index: 999;
+            transition: 0.3s;
+        }
+
+        .float-wa:hover {
+            transform: scale(1.1);
+            background-color: #128c7e;
+        }
+
+        /* --- Modal --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+
+        .bkash-container {
+            background: #fff0f0;
+            border: 2px dashed var(--primary-red);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .copy-btn {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            margin: 8px 0;
+            background: #f5f5f5;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--primary-red);
+        }
+
+        @media (max-width: 600px) {
+            .hero { height: 30vh; }
+            .container { margin-top: -10px; }
+            .float-wa { bottom: 15px; right: 15px; padding: 12px 15px; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="https://wa.me/8801979474606" class="float-wa" target="_blank">
+        <span>💬 WhatsApp Support</span>
+    </a>
+
+    <section class="hero">
+        <h1>Safe Trade Free Fire</h1>
+        <p>EXCLUSIVE RELEASE</p>
+    </section>
+
+    <div class="container">
+        <div class="card" id="p1">
+            <span class="badge status-available" id="badge-p1">IN STOCK</span>
+            
+            <img src="item_image.jpg" alt="Item Preview" class="product-img">
+            
+            <h3>Cyber Core V.1</h3>
+            
+            <a href="https://youtube.com/watch?v=VIDEO_ID" target="_blank" class="yt-link">▶ WATCH PREVIEW</a>
+
+            <div class="price-box">
+                <span class="old-price">৳5,500</span>৳2,999
+            </div>
+            
+            <button class="btn-action" onclick="openClaim()">CLAIM THIS DROP</button>
+            <p style="font-size: 0.75rem; margin-top:15px; color: #888;">🔥 <span id="view-count">24</span> people are viewing</p>
+        </div>
+    </div>
+
+    <div class="modal" id="claimModal">
+        <div class="modal-content">
+            <h2 style="color: var(--primary-red); margin-bottom: 5px;">SECURE ITEM</h2>
+            <p style="font-size: 0.85rem; color: #666;">Payment via bKash verifies your claim.</p>
+            
+            <div class="bkash-container">
+                <p style="font-size: 0.7rem; font-weight: bold; color: var(--primary-red);">bKash Send Money</p>
+                <h3 id="bkashNumber" style="font-size: 1.4rem; letter-spacing: 2px;">01979474606</h3>
+                <button class="copy-btn" onclick="copyNum()">COPY NUMBER</button>
+            </div>
+
+            <input type="text" id="userPhone" placeholder="Your bKash Number">
+            <input type="text" id="userTrx" placeholder="Transaction ID (TrxID)">
+            
+            <button class="btn-action" style="margin-top: 10px;" onclick="submitClaim()">CONFIRM PAYMENT</button>
+            
+            <div style="margin-top: 15px;">
+                <p style="font-size: 0.7rem; color: #999;">Need help? <a href="https://wa.me/8801979474606" style="color: var(--whatsapp-green); text-decoration: none; font-weight: bold;">Message on WhatsApp</a></p>
+            </div>
+
+            <button onclick="closeModal()" style="background:none; border:none; color:#bbb; margin-top:15px; cursor:pointer; font-size: 0.8rem;">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        function openClaim() {
+            document.getElementById('claimModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('claimModal').style.display = 'none';
+        }
+
+        function copyNum() {
+            const num = document.getElementById('bkashNumber').innerText;
+            navigator.clipboard.writeText(num);
+            const btn = document.querySelector('.copy-btn');
+            btn.innerText = "COPIED!";
+            btn.style.background = "#00c853";
+            setTimeout(() => {
+                btn.innerText = "COPY NUMBER";
+                btn.style.background = "#ff3b3b";
+            }, 2000);
+        }
+
+        function submitClaim() {
+            const phone = document.getElementById('userPhone').value;
+            const trx = document.getElementById('userTrx').value;
+
+            if(phone.length < 11 || trx.length < 5) {
+                alert("Please fill in correct details.");
+                return;
+            }
+
+            alert("Claim Received! Verifying your Transaction...");
+            closeModal();
+            
+            // Status update
+            const badge = document.getElementById('badge-p1');
+            badge.innerText = 'PENDING VERIFICATION';
+            badge.className = 'badge status-pending';
+            
+            const mainBtn = document.querySelector('.btn-action');
+            mainBtn.innerText = "VERIFYING...";
+            mainBtn.disabled = true;
+            mainBtn.style.opacity = "0.6";
+            mainBtn.style.cursor = "not-allowed";
+        }
+
+        // Live viewing count effect
+        setInterval(() => {
+            const count = Math.floor(Math.random() * 20) + 15;
+            document.getElementById('view-count').innerText = count;
+        }, 3000);
+    </script>
+</body>
+</html>
